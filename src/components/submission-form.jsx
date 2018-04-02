@@ -17,7 +17,7 @@ class SubmissionForm extends Component {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				snackPhoto: imageInput,
+				snackLink: imageInput,
 				comments: commentInput,
 				userName: this.props.userName,
 			}),

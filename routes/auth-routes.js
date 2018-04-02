@@ -1,11 +1,15 @@
 const router = require('express').Router();
 const passport = require('passport');
+const path = require('path');
 
 //need to build this page...
 router.get('/login', (req, res) => {
-	res.send('login');
+	res.sendFile(path.join(__dirname, './../login.html'));
 })
 
+router.get('/login.css', (req, res) => {
+	res.sendFile(path.join(__dirname, './../public/login.css'));
+});
 
 router.get('/github', passport.authenticate('github', {
 	scope: ['profile']
