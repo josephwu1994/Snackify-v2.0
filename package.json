@@ -1,0 +1,49 @@
+{
+  "name": "snackify",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "build": "webpack && npm start",
+    "start:dev": "webpack-dev-server --hot"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/troutman21/Snackify.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/troutman21/Snackify/issues"
+  },
+  "homepage": "https://github.com/troutman21/Snackify#readme",
+  "dependencies": {
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-beta.3",
+    "cors": "^2.8.4",
+    "css-loader": "^0.28.11",
+    "express": "^4.16.3",
+    "passport": "^0.4.0",
+    "passport-github": "^1.1.0",
+    "passport-google-oauth20": "^1.0.0",
+    "path": "^0.12.7",
+    "pg": "^7.4.1",
+    "pg-format": "^1.0.4",
+    "pg-promise": "^8.2.2",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
+    "style-loader": "^0.20.3",
+    "webpack": "^4.4.1",
+    "webpack-cli": "^2.0.13",
+    "webpack-dev-server": "^3.1.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0"
+  }
+}

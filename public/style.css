@@ -1,0 +1,94 @@
+*{
+    margin: 0;
+    padding: 0; 
+}
+body{
+    background-color: slategray;
+}
+header{
+    background-color:black;
+    color:white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    padding:10px; 
+}
+
+header ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+header ul li{
+    margin-left:20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#currentUserImage{
+    width:40px;
+    height:40px;
+    border-radius: 50%;
+}
+
+
+#currentUserDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+#logo{
+    font-size: 30px;
+}
+
+#submissionForm{
+    background-color:lightcoral;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+#submissionForm h1 {
+    text-decoration: underline,
+}
+
+#submissionForm h1  {
+    text-decoration: underline,
+}
+
+#photoGallery{
+    border: 1px solid darkgray;
+    border-radius: 5px;  
+    margin: 10px; 
+    display: flex;
+    flex-flow: row wrap; 
+    align-content: center;
+
+
+}
+
+.entryImg{
+    width: 200px;
+    height: 200px;
+
+}
+
+.entry{
+
+    border: 1px solid lightgray; 
+    margin: 50px; 
+}
+
+#footer{
+    background-color: black; 
+    color: white;
+ 
+}
