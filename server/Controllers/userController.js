@@ -10,7 +10,7 @@ userController.createUser = (profile, done) => {
 			VALUES ('${profile.username}', '${profile.photos[0].value}',${3}, ${1});`, (err, user) => {
 					if (err) console.log('Im the error from insert ' + err);
 					db.query(`SELECT * from u where username = '${profile.username}';`, (err, user) => {
-						done(null, user.rows[0].userName);
+						done(null, user.rows[0].username);
 					});
 				});
 		} else {
