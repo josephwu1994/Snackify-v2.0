@@ -8,6 +8,7 @@ class SubmissionForm extends Component {
 	
 
 	submitEntry(e) {
+		console.log('in the feltch');
 		const imageInput = document.getElementById('imageinput').value;
 		const commentInput = document.getElementById('commentinput').value;
 		fetch('/submission', {

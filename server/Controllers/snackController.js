@@ -3,13 +3,14 @@ const db = require('./../DB/db');
 const snackController = {};
 
 snackController.submitSnack = (req, res) => {
+	console.log('trying to submit snack');
 	db.query(`SELECT submissioncount from u where username = '${req.body.username}';`, (err, count) => {
 		console.log(JSON.stringify(count)+"<==== this is count");
 		if (count.rows[0].submissioncount === 0) {
 			res.send('You Eat Too Much');
 		} else {
 			db.query(`UPDATE u SET submissioncount = submissioncount -1 WHERE username = '${req.body.username}';
-				  INSERT INTO post (snacklink, description, username, votes) VALUES ('${req.body.snacklink}', '${req.body.comments}', '${req.body.username}', 0);`,
+				  INSERT INTO post (snacklink, description, postby, votes) VALUES ('${req.body.snacklink}', '${req.body.comments}', '${req.body.username}', 0);`,
 				(err, result) => {
 					if (err) throw new Error(err);
 					res.send('successfully posted');
@@ -19,14 +20,12 @@ snackController.submitSnack = (req, res) => {
 }
 
 snackController.deleteSnack = (req, res) => {
-	console.log(req.body.id, req.body.username);
-	const deleteQuery = `Delete from "post" where id = ${req.body.id} and username = '${req.body.username}';`;
+	const deleteQuery = `Delete from "post" where id = ${req.body.id} and postby = '${req.body.username}';`;
 	db.query(deleteQuery, (err, result) => {
-		console.log('result', result);
 		if (err || !result.rows[0]) {
 			res.status(400).json({error: "cannot delete post"});
 		} else if (result) {
-			res.send('successfully deleted');
+			res.status(200).send('successfully deleted');
 		}
 	});
 }
