@@ -42,7 +42,6 @@ class Entry extends Component {
 	}
 
 	render() {
-
 		let id;
 		let username;
 		let commentDisplay = [<div className="None"></div>];
@@ -76,29 +75,6 @@ class Entry extends Component {
 			)
 		}
 	}
-
-        return (
-            <div className="entry">
-              <div>{this.props.userPost.postby}</div>
-              <img className='entryImg' src={this.props.userPost.snacklink} />
-              {commentDisplay}
-              <div className="votes">{this.props.userPost.votes}</div>
-              <button className="thumbsBtn" onClick={this.voteUp}><ThumbsUp className="thumbs" /></button>
-            </div>
-        );
-    } else {
-        return (
-            <div className='entry'>
-              <div>{this.props.userPost.postby}</div>
-              <img className='entryImg' src={this.props.userPost.snacklink} />
-              {commentDisplay}
-              <div className="votes">{this.props.userPost.votes}</div>
-              <button className="thumbsBtn" onClick={this.voteUp}><ThumbsUp className="thumbs" /></button>
-            </div>
-        )
-      }
-    }
-
 }
 
 export default Entry;
