@@ -3,7 +3,7 @@ const db = require('./../DB/db');
 const snackController = {};
 
 snackController.submitSnack = (req, res) => {
-	console.log('trying to submit snack');
+
 	db.query(`SELECT submissioncount from u where username = '${req.body.username}';`, (err, count) => {
 		console.log(JSON.stringify(count)+"<==== this is count");
 		if (count.rows[0].submissioncount === 0) {
@@ -70,6 +70,19 @@ snackController.incrementVotes = (req, res, next) => {
 		if(err) throw err;
 		next();
 	})
+}
+
+snackController.addComment = (req, res) => {
+	req.body.content = req.body.content.split('').map((w) => {
+		if (w==="\'") {
+			return "\'\'";
+		}
+		return w;
+	}).join('');
+	db.query(`INSERT INTO comments (postid, createdby, content) VALUES (${req.body.postid}, '${req.body.createdby}', '${req.body.content}');`, (err, body) => {
+		if(err) throw err;
+		res.json('Successfully posted Comments');
+	});
 }
 
 module.exports = snackController;
