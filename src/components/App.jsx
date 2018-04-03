@@ -24,7 +24,7 @@ class App extends Component{
         })
 				.catch(err => console.log(err));
 
-
+    }
 
 	commentPost(content, postid, createdby) {
 		fetch('/comment', {

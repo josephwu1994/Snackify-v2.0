@@ -9,6 +9,7 @@ class Entry extends Component {
 		this.state = {
 			content : '',
 		}
+		this.textHandle = this.textHandle.bind(this);
 	}
 
 	textHandle(e) {
@@ -48,7 +49,7 @@ class Entry extends Component {
 					{commentDisplay}
 					<div className="votes">{this.props.userPost.votes}</div>
 					<button className="thumbsBtn" onClick={() => {this.props.voteUp(this.props.usernameLoggedIn, this.props.userPost.postby)}}><ThumbsUp className="thumbs" /></button>
-					<input className="commentInput" onChange={(e)=>{content = e.target.value}} />
+					<input className="commentInput" onChange={this.textHandle} />
 					<button className="commentBtn" onClick={()=> {this.props.commentPost(this.state.content, this.props.userPost.id, this.props.usernameLoggedIn)}}> reply </button>
 				</div>
 			)
