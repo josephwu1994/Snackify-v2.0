@@ -3,13 +3,13 @@ const db = require('./../DB/db');
 const snackController = {};
 
 snackController.submitSnack = (req, res) => {
-	db.query(`SELECT submissioncount from u where username = '${req.body.userName}';`, (err, count) => {
+	db.query(`SELECT submissioncount from u where username = '${req.body.username}';`, (err, count) => {
 		console.log(JSON.stringify(count)+"<==== this is count");
 		if (count.rows[0].submissioncount === 0) {
 			res.send('You Eat Too Much');
 		} else {
-			db.query(`UPDATE u SET submissioncount = submissioncount -1 WHERE username = '${req.body.userName}';
-				  INSERT INTO post (snacklink, description, username, votes) VALUES ('${req.body.snackLink}', '${req.body.comments}', '${req.body.userName}', 0);`,
+			db.query(`UPDATE u SET submissioncount = submissioncount -1 WHERE username = '${req.body.username}';
+				  INSERT INTO post (snacklink, description, postby, votes) VALUES ('${req.body.snacklink}', '${req.body.comments}', '${req.body.username}', 0);`,
 				(err, result) => {
 					if (err) throw new Error(err);
 					res.send('successfully posted');
@@ -71,6 +71,19 @@ snackController.incrementVotes = (req, res, next) => {
 		if(err) throw err;
 		next();
 	})
+}
+
+snackController.addComment = (req, res) => {
+	req.body.content = req.body.content.split('').map((w) => {
+		if (w==="\'") {
+			return "\'\'";
+		}
+		return w;
+	}).join('');
+	db.query(`INSERT INTO comments (postid, createdby, content) VALUES (${req.body.postid}, '${req.body.createdby}', '${req.body.content}');`, (err, body) => {
+		if(err) throw err;
+		res.json('Successfully posted Comments');
+	});
 }
 
 module.exports = snackController;

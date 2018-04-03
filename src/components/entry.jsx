@@ -6,6 +6,10 @@ import ThumbsUp from 'react-icons/lib/fa/thumbs-up';
 class Entry extends Component {
 	constructor(props) {
 		super(props)
+		this.state = {
+			content : '',
+		}
+		this.textHandle = this.textHandle.bind(this);
 		this.deletePost = this.deletePost.bind(this);
 		this.voteUp = this.voteUp.bind(this);
 	}
@@ -41,37 +45,42 @@ class Entry extends Component {
 		});
 	}
 
+	textHandle(e) {
+		this.setState({content: e.target.value});
+	}
 	render() {
-
 		let id;
 		let username;
 		let commentDisplay = [<div className="None"></div>];
+		if (this.props.userPost.comments !== undefined) {
+			commentDisplay = this.props.userPost.comments.map((comment, i) => {
+				return <Comment key={(i + shortid.generate()).toString()} commentInfo={comment} />
+			})
+		}
 		if (this.props.usernameLoggedIn === this.props.userPost.postby) {
-			if (this.props.userPost.comments !== undefined) {
-				commentDisplay = this.props.userPost.comments.map((comment, i) => {
-					return <Comment key={(i + shortid.generate()).toString()} commentInfo={comment} />
-				})
-			}
-
+			
 			return (
 				<div className='entry'>
-					<div>{this.props.userPost.posby}</div>
+					<div>{this.props.userPost.postby}</div>
 					<img className='entryImg' src={this.props.userPost.snacklink} />
 					{commentDisplay}
 					<div className="votes">{this.props.userPost.votes}</div>
 					<button className="thumbsBtn" onClick={this.voteUp}><ThumbsUp className="thumbs" /></button>
 					<button className="deleteBtn" onClick={() => { this.deletePost(this.props.userPost.id, this.props.usernameLoggedIn) }} > Delete </button>
-					<input className="commentInput" onChange={()=>{}} />
+					<input className="commentInput" onChange={this.textHandle} />
+					<button className="commentBtn" onClick={()=> {this.props.commentPost(this.state.content, this.props.userPost.id, this.props.usernameLoggedIn)}}> reply </button>
 				</div>
 			);
 		} else {
 			return (
 				<div className='entry'>
-					<div>{this.props.userPost.posby}</div>
-					<img className='entryImg' src={this.props.userPost.snackPhoto} />
+					<div>{this.props.userPost.postby}</div>
+					<img className='entryImg' src={this.props.userPost.snacklink} />
 					{commentDisplay}
 					<div className="votes">{this.props.userPost.votes}</div>
 					<button className="thumbsBtn" onClick={this.voteUp}><ThumbsUp className="thumbs" /></button>
+					<input className="commentInput" onChange={(e)=>{content = e.target.value}} />
+					<button className="commentBtn" onClick={()=> {this.props.commentPost(this.state.content, this.props.userPost.id, this.props.usernameLoggedIn)}}> reply </button>
 				</div>
 			)
 		}
