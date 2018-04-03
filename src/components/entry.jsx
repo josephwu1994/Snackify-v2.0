@@ -12,6 +12,7 @@ class Entry extends Component {
 		this.textHandle = this.textHandle.bind(this);
 	}
 
+
 	textHandle(e) {
 		this.setState({content: e.target.value});
 	}
@@ -55,8 +56,6 @@ class Entry extends Component {
 			)
 		}
 	}
-
-
 }
 
 export default Entry;

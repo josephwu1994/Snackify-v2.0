@@ -104,10 +104,18 @@ class App extends Component{
     
 
     render(){
+
+      let showSubmit = [];
+      if(this.state.submissioncount > 0 ) {
+        showSubmit.push(<SubmissionForm username={this.state.username} />);
+      } else {
+        showSubmit.push(<div></div>);
+      }
+        
         return (
             <div>
                 <Header id='header' username={this.state.username}  avatar={this.state.avatar} />
-                <SubmissionForm username={this.state.username} />
+                { showSubmit }
                 <PhotoGallery gallery={this.state.gallery} usernameLoggedIn={this.state.username} commentPost={this.commentPost} voteUp={this.voteUp} deletePost={this.deletePost}/>
                 <Footer />
             </div>
