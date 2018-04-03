@@ -34,7 +34,7 @@ class App extends Component{
         return (
             <div>
                 <Header id='header' userName={this.state.username}  avatar={this.state.avatar} />
-                <SubmissionForm userName={this.state.userName} />
+                <SubmissionForm userName={this.state.username} />
                 <PhotoGallery gallery={this.state.gallery} />
                 <Footer />
             </div>

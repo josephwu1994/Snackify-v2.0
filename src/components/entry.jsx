@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import Comment from './Comment.jsx';
+import shortid from 'shortid';
+import ThumbsUp from 'react-icons/lib/fa/thumbs-up';
 
 class Entry extends Component {
 
@@ -10,13 +13,22 @@ class Entry extends Component {
     }
 
     render() {
+			let commentDisplay = [];
+			if(this.props.userPost.comments !== undefined) {
+				 commentDisplay = this.props.userPost.comments.map( (comment, i) => {
+					return <Comment key={(i+shortid.generate()).toString()} commentInfo ={comment} />
+				})
+			} else {
+				commentDisplay.push(<div className="None"></div>);
+			}
+
         return (
             <div className='entry'>
-                <div>{this.props.userPost.userName}</div>
+                <div>{this.props.userPost.username}</div>
                 <img className='entryImg' src={this.props.userPost.snackPhoto} />
-                <div className="comments">{this.props.userPost.comments}</div>
+                {commentDisplay}
 								<div className="votes">{this.props.userPost.votes}</div>
-                <button onClick={this.voteUp}>Thumbs up!</button>
+                <button className="thumbsBtn" onClick={this.voteUp}><ThumbsUp className="thumbs" /></button>
             </div>
         );
     }

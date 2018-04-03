@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Entry from './entry.jsx';
+import shortid from 'shortid';
 
 class PhotoGallery extends Component {
 
@@ -16,12 +17,11 @@ class PhotoGallery extends Component {
 		const display = [];
 		if (this.props.gallery) {
 			for (let i = 0; i < this.props.gallery.length; i++) {
-				display.push(<Entry key={i} userPost={this.props.gallery[i]} />);
+				display.push(<Entry key={(i+shortid.generate()).toString()} userPost={this.props.gallery[i]} />);
 			} 
 		} else {
 			display.push(<div></div>)
 		}
-		// let images = tempPics.map((e, i) => <Entry src={e} key={i} />);
 		return (
 			<div id='photoGallery'>
 				{display}
