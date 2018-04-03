@@ -75,6 +75,15 @@ class App extends Component{
                     gallery[i].votes = gallery[i].votes + 1;
                 }
             }
+
+                for (let i = 0; i < gallery.length - 1; i++) {
+                    if (gallery[i].votes < gallery[i+1].votes) {
+                        let galleryTemp = gallery[i+1];
+                        gallery[i+1] = gallery[i];
+                        gallery[i] = galleryTemp;
+                    }
+                }
+            
             this.setState({gallery: gallery});
             })
 	};
