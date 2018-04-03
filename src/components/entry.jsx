@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import thumbsUp from 'react-icons/lib/fa/thumbs-o-up';
 
 class Entry extends Component {
 
@@ -16,7 +17,7 @@ class Entry extends Component {
                 <img className='entryImg' src={this.props.userPost.snackPhoto} />
                 <div className="comments">{this.props.userPost.comments}</div>
 								<div className="votes">{this.props.userPost.votes}</div>
-                <button onClick={this.voteUp}>Thumbs up!</button>
+                <button onClick={this.voteUp}><FontAwesome.thumbsUp /></button>
             </div>
         );
     }
