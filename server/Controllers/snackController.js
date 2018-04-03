@@ -9,7 +9,7 @@ snackController.submitSnack = (req, res) => {
 			res.send('You Eat Too Much');
 		} else {
 			db.query(`UPDATE u SET submissioncount = submissioncount -1 WHERE username = '${req.body.username}';
-				  INSERT INTO post (snacklink, description, postby, votes) VALUES ('${req.body.snackLink}', '${req.body.comments}', '${req.body.userName}', 0);`,
+				  INSERT INTO post (snacklink, description, postby, votes) VALUES ('${req.body.snacklink}', '${req.body.comments}', '${req.body.username}', 0);`,
 				(err, result) => {
 					if (err) throw new Error(err);
 					res.send('successfully posted');
@@ -19,14 +19,12 @@ snackController.submitSnack = (req, res) => {
 }
 
 snackController.deleteSnack = (req, res) => {
-	console.log(req.body.id, req.body.username);
-	const deleteQuery = `Delete from "post" where id = ${req.body.id} and username = '${req.body.username}';`;
+	const deleteQuery = `Delete from "post" where id = ${req.body.id} and postby = '${req.body.username}';`;
 	db.query(deleteQuery, (err, result) => {
-		console.log('result', result);
 		if (err || !result.rows[0]) {
 			res.status(400).json({error: "cannot delete post"});
 		} else if (result) {
-			res.send('successfully deleted');
+			res.status(200).send('successfully deleted');
 		}
 	});
 }
@@ -73,6 +71,18 @@ snackController.incrementVotes = (req, res, next) => {
 	})
 }
 
+snackController.addComment = (req, res) => {
+	req.body.content = req.body.content.split('').map((w) => {
+		if (w==="\'") {
+			return "\'\'";
+		}
+		return w;
+	}).join('');
+	db.query(`INSERT INTO comments (postid, createdby, content) VALUES (${req.body.postid}, '${req.body.createdby}', '${req.body.content}');`, (err, body) => {
+		if(err) throw err;
+		res.json('Successfully posted Comments');
+	});
+}
 
 
 module.exports = snackController;
