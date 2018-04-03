@@ -1,15 +1,17 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Header from './header.jsx';
 import SubmissionForm from './submission-form.jsx';
 import PhotoGallery from './photoGallery.jsx';
 import Footer from './footer.jsx';
+
 
 class App extends Component{
     constructor(props) {
         super(props)
         this.state = {};
         this.deletePost = this.deletePost.bind(this);
-		this.voteUp = this.voteUp.bind(this);
+		    this.voteUp = this.voteUp.bind(this);
+        this.commentPost = this.commentPost.bind(this);
     }
 
     componentDidMount() {
@@ -22,15 +24,37 @@ class App extends Component{
         })
 				.catch(err => console.log(err));
 
-				// fetch('/gallery', {credentials: "same-origin"})
-				// .then(res => res.json())
-				// .then(myJson => {
-				// 	console.log(myJson);
-				// 	this.setState({gallery: myJson});
-				// 	console.log(this.state);
-				// })
-    }
 
+
+	commentPost(content, postid, createdby) {
+		fetch('/comment', {
+			method: 'POST',
+			headers: {
+				credentials: "same-origin",
+				'content-type': 'application/json',
+			},
+			body: JSON.stringify({
+				content,
+				postid,
+				createdby
+			})
+		})
+		.then((res) => {
+			this.setState({gallery: this.state.gallery.map(post => {
+				if(post.id === postid) {
+					if(post.comments) post.comments.push({createdby, content});
+					else {
+						const commentArr = [];
+						commentArr.push({createdby, content});
+						post.comments = commentArr;
+					}
+					return post;
+				}
+				return post;
+			})
+		})
+	})
+}
 
     voteUp(username, postby) {
 		fetch('/voteup', {
@@ -84,11 +108,12 @@ class App extends Component{
             <div>
                 <Header id='header' username={this.state.username}  avatar={this.state.avatar} />
                 <SubmissionForm username={this.state.username} />
-                <PhotoGallery gallery={this.state.gallery} usernameLoggedIn={this.state.username} voteUp={this.voteUp} deletePost={this.deletePost}/>
+                <PhotoGallery gallery={this.state.gallery} usernameLoggedIn={this.state.username} commentPost={this.commentPost} voteUp={this.voteUp} deletePost={this.deletePost}/>
                 <Footer />
             </div>
         );
     }
+
 }
 
 export default App;
