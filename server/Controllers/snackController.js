@@ -3,6 +3,7 @@ const db = require('./../DB/db');
 const snackController = {};
 
 snackController.submitSnack = (req, res) => {
+
 	db.query(`SELECT submissioncount from u where username = '${req.body.username}';`, (err, count) => {
 		console.log(JSON.stringify(count)+"<==== this is count");
 		if (count.rows[0].submissioncount === 0) {
@@ -19,14 +20,12 @@ snackController.submitSnack = (req, res) => {
 }
 
 snackController.deleteSnack = (req, res) => {
-	console.log(req.body.id, req.body.username);
-	const deleteQuery = `Delete from "post" where id = ${req.body.id} and username = '${req.body.username}';`;
+	const deleteQuery = `Delete from "post" where id = ${req.body.id} and postby = '${req.body.username}';`;
 	db.query(deleteQuery, (err, result) => {
-		console.log('result', result);
 		if (err || !result.rows[0]) {
 			res.status(400).json({error: "cannot delete post"});
 		} else if (result) {
-			res.send('successfully deleted');
+			res.status(200).send('successfully deleted');
 		}
 	});
 }

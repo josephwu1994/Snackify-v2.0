@@ -48,7 +48,7 @@ app.get('/test', snackController.grabSnack, (req, res) => {
 });
 
 app.post('/voteup', snackController.incrementVotes,
-										userController.decrementVoteCount
+										userController.handleVote
 );
 
 app.post('/comment', snackController.addComment);
