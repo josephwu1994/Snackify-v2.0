@@ -35,7 +35,7 @@ class Entry extends Component {
 			},
 			body: JSON.stringify({ id: id, username: username })
 		}).then(result => {
-			location.reload();
+			console.log(result);
 		}).catch(err => {
 			console.log('ERROR!', err);
 		});
