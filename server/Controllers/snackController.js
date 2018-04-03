@@ -33,7 +33,7 @@ snackController.deleteSnack = (req, res) => {
 
 
 snackController.grabSnack = (req, res, next) => {
-	db.query(`SELECT username FROM post;
+	db.query(`SELECT postby FROM post;
 						SELECT snacklink FROM post;
 						SELECT votes FROM post;
 						SELECT description FROM post;
@@ -45,7 +45,7 @@ snackController.grabSnack = (req, res, next) => {
 			})
 			for (let i = 0; i < rows[0].length; i++) {
 				const userObj = {};
-				userObj.username = rows[0][i].username;
+				userObj.postby = rows[0][i].postby;
 				userObj.snacklink = rows[1][i].snacklink;
 				userObj.votes = rows[2][i].votes;
 				userObj.description = rows[3][i].description;
