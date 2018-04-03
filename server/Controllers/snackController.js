@@ -41,8 +41,8 @@ snackController.grabSnack = (req, res) => {
 		});
 }
 
-snackController.grabComments = (req, res) => {
-
-}
+// snackController.grabComments = (req, res) => {
+// 	db.query(`SELECt `)
+// }
 
 module.exports = snackController;

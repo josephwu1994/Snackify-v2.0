@@ -2,6 +2,7 @@ const express = require('express');
 const authRoutes = require('./routes/auth-routes');
 const path = require('path');
 const passport = require('passport');
+const passportSetup = require('./config/passport-setup');
 const cookieSession = require('cookie-session');
 const keys = require('./config/keys');
 const cookieParser = require('cookie-parser');
