@@ -8,7 +8,7 @@ class CurrentUser extends Component {
                  {/*this needs to pull in getHub avatar */}
                 {/* and user name */}
                 <img id='currentUserImage' src={this.props.avatar} />
-                <div id='currentUserName' >{this.props.userName}</div>
+                <div id='currentUserName' >{this.props.username}</div>
             </div>
         );
     }

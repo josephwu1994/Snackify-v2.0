@@ -33,9 +33,9 @@ class App extends Component{
     render(){
         return (
             <div>
-                <Header id='header' userName={this.state.username}  avatar={this.state.avatar} />
-                <SubmissionForm userName={this.state.username} />
-                <PhotoGallery gallery={this.state.gallery} username={this.state.username} />
+                <Header id='header' username={this.state.username}  avatar={this.state.avatar} />
+                <SubmissionForm username={this.state.username} />
+                <PhotoGallery gallery={this.state.gallery} usernameLoggedIn={this.state.username} />
                 <Footer />
             </div>
         );

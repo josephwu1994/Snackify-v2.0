@@ -25,7 +25,8 @@ router.get('/github/redirect', passport.authenticate('github'), (req, res) => {
 
 //need to build this page ...
 router.get('/logout', (req, res) => {
-	res.send('logged out');
+	req.logout();
+	res.redirect('/auth/login');
 })
 
 
