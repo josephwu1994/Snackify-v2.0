@@ -7,7 +7,24 @@ class Entry extends Component {
     constructor(props){
 		super(props)
 		this.deletePost = this.deletePost.bind(this);
+    this.voteUp = this.voteUp.bind(this);
 	}
+
+  voteUp() {
+    fetch('/voteup', {
+			method: 'POST',
+			credentials: 'same-origin',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+        username: this.props.username,
+        postby: this.props.userPost.postby,
+			})
+      .then(res => res.json())
+      .then(json => alert(json))
+    });
+  }
 
     deletePost(id, username) {
         fetch('/delete', {
@@ -56,8 +73,11 @@ class Entry extends Component {
               <div className="votes">{this.props.userPost.votes}</div>
               <button className="thumbsBtn" onClick={this.voteUp}><ThumbsUp className="thumbs" /></button>
             </div>
-        )}
+        )
+      }
     }
+
+    
 }
 
 export default Entry;

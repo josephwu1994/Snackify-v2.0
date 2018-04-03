@@ -66,8 +66,11 @@ snackController.grabSnack = (req, res, next) => {
 		});
 }
 
-snackController.grabComments = (req, res) => {
-	db.query(`SELECT `)
+snackController.incrementVotes = (req, res, next) => {
+	db.query(`UPDATE post SET votes = votes +1 where postby = '${req.body.postby}';`, (err, body) => {
+		if(err) throw err;
+		next();
+	})
 }
 
 module.exports = snackController;
