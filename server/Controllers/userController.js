@@ -21,4 +21,11 @@ userController.createUser = (profile, done) => {
 	});
 }
 
+
+userController.decrementVoteCount = (req, res) => {
+	db.query(`UPDATE u SET votecount = votecount -1 WHERE username = '${req.body.username}';`, (err, result) => {
+		res.send('Thanks for Voting');
+	})
+}
+
 module.exports = userController;

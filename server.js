@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const db = require('./server/DB/db');
 const snackController = require('./server/Controllers/snackController');
+const userController = require('./server/Controllers/userController');
 
 const app = express();
 
@@ -44,6 +45,10 @@ app.get('/test', snackController.grabSnack, (req, res) => {
 	req.user.gallery = res.locals.result;
 	res.json(req.user);
 });
+
+app.post('/voteup', snackController.incrementVotes,
+										userController.decrementVoteCount
+);
 
 
 app.listen(3000, () => {
