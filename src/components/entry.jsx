@@ -61,6 +61,7 @@ class Entry extends Component {
 					<div className="votes">{this.props.userPost.votes}</div>
 					<button className="thumbsBtn" onClick={this.voteUp}><ThumbsUp className="thumbs" /></button>
 					<button className="deleteBtn" onClick={() => { this.deletePost(this.props.userPost.id, this.props.usernameLoggedIn) }} > Delete </button>
+					<input className="commentInput" onChange={()=>{}} />
 				</div>
 			);
 		} else {
