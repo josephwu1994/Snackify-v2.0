@@ -17,7 +17,6 @@ class App extends Component{
         .then(myJson => {
 					console.log(myJson);
 					this.setState(myJson);
-					console.log(this.state + "<==== this.state");
         })
 				.catch(err => console.log(err));
 
