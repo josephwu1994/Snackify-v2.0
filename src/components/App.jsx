@@ -35,7 +35,7 @@ class App extends Component{
             <div>
                 <Header id='header' username={this.state.username}  avatar={this.state.avatar} />
                 <SubmissionForm username={this.state.username} />
-                <PhotoGallery gallery={this.state.gallery} />
+                <PhotoGallery gallery={this.state.gallery} usernameLoggedIn={this.state.username} />
                 <Footer />
             </div>
         );
