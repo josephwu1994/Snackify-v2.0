@@ -19,6 +19,7 @@ class PhotoGallery extends Component {
 			for (let i = 0; i < this.props.gallery.length; i++) {
 				display.push(<Entry key={this.props.gallery[i].id} userPost={this.props.gallery[i]} usernameLoggedIn={this.props.usernameLoggedIn} commentPost={this.props.commentPost} voteUp={this.props.voteUp} deletePost={this.props.deletePost}/>);
 			} 
+
 		} else {
 			display.push(<div></div>)
 		}

@@ -3,7 +3,6 @@ const db = require('./../DB/db');
 const snackController = {};
 
 snackController.submitSnack = (req, res) => {
-
 	db.query(`SELECT submissioncount from u where username = '${req.body.username}';`, (err, count) => {
 		console.log(JSON.stringify(count)+"<==== this is count");
 		if (count.rows[0].submissioncount === 0) {
@@ -84,5 +83,6 @@ snackController.addComment = (req, res) => {
 		res.json('Successfully posted Comments');
 	});
 }
+
 
 module.exports = snackController;
