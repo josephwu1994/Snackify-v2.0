@@ -18,7 +18,7 @@ class Entry extends Component {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-        username: this.props.username,
+        username: this.props.usernameLoggedIn,
         postby: this.props.userPost.postby,
 			})
       .then(res => res.json())
@@ -57,7 +57,7 @@ class Entry extends Component {
 
         return (
             <div className='entry'>
-              <div>{this.props.userPost.username}</div>
+              <div>{this.props.userPost.postby}</div>
               <img className='entryImg' src={this.props.userPost.snacklink} />
               {commentDisplay}
               <div className="votes">{this.props.userPost.votes}</div>
@@ -67,8 +67,8 @@ class Entry extends Component {
     } else {
         return (
             <div className='entry'>
-              <div>{this.props.userPost.username}</div>
-              <img className='entryImg' src={this.props.userPost.snackPhoto} />
+              <div>{this.props.userPost.postby}</div>
+              <img className='entryImg' src={this.props.userPost.snacklink} />
               {commentDisplay}
               <div className="votes">{this.props.userPost.votes}</div>
               <button className="thumbsBtn" onClick={this.voteUp}><ThumbsUp className="thumbs" /></button>
