@@ -17,22 +17,37 @@ snackController.submitSnack = (req, res) => {
 	});
 }
 
+snackController.deleteSnack = (req, res) => {
+	console.log(req.body.id, req.body.username);
+	const deleteQuery = `Delete from "post" where id = ${req.body.id} and username = '${req.body.username}';`;
+	db.query(deleteQuery, (err, result) => {
+		console.log('result', result);
+		if (err || !result.rows[0]) {
+			res.status(400).json({error: "cannot delete post"});
+		} else if (result) {
+			res.send('successfully deleted');
+		}
+	});
+}
+
 
 snackController.grabSnack = (req, res) => {
 	db.query(`SELECT username FROM post;
 						SELECT snacklink FROM post;
 						SELECT votes FROM post;
-						SELECT description FROM post;`, (err, result) => {
+						SELECT description FROM post;
+						SELECT id FROM post;`, (err, result) => {
 			const resultArr = [];
 			const rows = result.map((col) => {
 				return col.rows;
 			})
 			for (let i = 0; i < rows[0].length; i++) {
 				const userObj = {};
-				userObj.userName = rows[0][i].username;
+				userObj.username = rows[0][i].username;
 				userObj.snackPhoto = rows[1][i].snacklink;
 				userObj.votes = rows[2][i].votes;
 				userObj.description = rows[3][i].description;
+				userObj.id = rows[4][i].id;
 				resultArr.push(userObj);
 			}
 			req.user = JSON.parse(req.user);

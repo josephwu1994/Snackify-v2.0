@@ -16,7 +16,7 @@ class PhotoGallery extends Component {
 		const display = [];
 		if (this.props.gallery) {
 			for (let i = 0; i < this.props.gallery.length; i++) {
-				display.push(<Entry key={i} userPost={this.props.gallery[i]} />);
+				display.push(<Entry key={i} userPost={this.props.gallery[i]} usernameLoggedIn={this.props.usernameLoggedIn}/>);
 			} 
 		} else {
 			display.push(<div></div>)

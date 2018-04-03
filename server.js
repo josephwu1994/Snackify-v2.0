@@ -35,6 +35,8 @@ app.get('/', (req, res) => {
 });
 
 app.post('/submission', snackController.submitSnack);
+
+app.post('/delete', snackController.deleteSnack);
 //=================================================================
 
 app.get('/test', snackController.grabSnack);
