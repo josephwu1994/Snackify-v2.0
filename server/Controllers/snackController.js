@@ -31,8 +31,8 @@ snackController.grabSnack = (req, res, next) => {
 			})
 			for (let i = 0; i < rows[0].length; i++) {
 				const userObj = {};
-				userObj.userName = rows[0][i].username;
-				userObj.snackPhoto = rows[1][i].snacklink;
+				userObj.username = rows[0][i].username;
+				userObj.snacklink = rows[1][i].snacklink;
 				userObj.votes = rows[2][i].votes;
 				userObj.description = rows[3][i].description;
 				userObj.id = rows[4][i].id;
