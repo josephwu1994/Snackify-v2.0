@@ -37,11 +37,10 @@ app.get('/', (req, res) => {
 
 app.post('/submission', snackController.submitSnack);
 
-app.post('/delete', snackController.deleteSnack);
+app.post('/delete', snackController.deleteSnack, userController.handleDelete);
 //=================================================================
 
 app.get('/test', snackController.grabSnack, (req, res) => {
-	console.log(req.user);
 	req.user = JSON.parse(req.user);
 	req.user.gallery = res.locals.result;
 	res.json(req.user);

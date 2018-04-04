@@ -18,9 +18,8 @@ router.get('/github', passport.authenticate('github', {
 
 router.get('/github/redirect', passport.authenticate('github'), (req, res) => {
 	//user info is stored on req.user
-	// console.log(req.user, '<== req.user from gh/redirect route');
+	console.log(req.user, '<== req.user from gh/redirect route');
 	res.redirect('/');
-
 });
 
 //need to build this page ...
