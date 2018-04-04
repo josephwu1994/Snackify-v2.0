@@ -5,26 +5,26 @@ import PhotoGallery from './photoGallery.jsx';
 import Footer from './footer.jsx';
 
 
-class App extends Component{
-    constructor(props) {
-        super(props)
-        this.state = {};
-        this.deletePost = this.deletePost.bind(this);
-		    this.voteUp = this.voteUp.bind(this);
-        this.commentPost = this.commentPost.bind(this);
-    }
+class App extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {};
+		this.deletePost = this.deletePost.bind(this);
+		this.voteUp = this.voteUp.bind(this);
+		this.commentPost = this.commentPost.bind(this);
+		this.submitEntry = this.submitEntry.bind(this);
+	}
 
-    componentDidMount() {
-        console.log(`componentDidMount fired!!! `);
-        fetch('/test', {credentials: "same-origin"})
-        .then(response => response.json())
-        .then(myJson => {
-					console.log('myJson', myJson);
-					this.setState(myJson);
-        })
-				.catch(err => console.log(err));
-
-    }
+	componentDidMount() {
+		console.log(`componentDidMount fired!!! `);
+		fetch('/test', { credentials: "same-origin" })
+			.then(response => response.json())
+			.then(myJson => {
+				console.log('myJson', myJson);
+				this.setState(myJson);
+			})
+			.catch(err => console.log(err));
+	}
 
 	commentPost(content, postid, createdby) {
 		fetch('/comment', {
@@ -39,24 +39,25 @@ class App extends Component{
 				createdby
 			})
 		})
-		.then((res) => {
-			this.setState({gallery: this.state.gallery.map(post => {
-				if(post.id === postid) {
-					if(post.comments) post.comments.push({createdby, content});
-					else {
-						const commentArr = [];
-						commentArr.push({createdby, content});
-						post.comments = commentArr;
-					}
-					return post;
-				}
-				return post;
+			.then((res) => {
+				this.setState({
+					gallery: this.state.gallery.map(post => {
+						if (post.id === postid) {
+							if (post.comments) post.comments.push({ createdby, content });
+							else {
+								const commentArr = [];
+								commentArr.push({ createdby, content });
+								post.comments = commentArr;
+							}
+							return post;
+						}
+						return post;
+					})
+				})
 			})
-		})
-	})
-}
+	}
 
-    voteUp(username, postby) {
+	voteUp(username, postby) {
 		fetch('/voteup', {
 			method: 'POST',
 			headers: {
@@ -69,30 +70,30 @@ class App extends Component{
 			})
 		})
 			.then(res => {
-            let gallery = this.state.gallery;
-            for (let i = 0; i < gallery.length; i++) {
-                if (gallery[i].postby === postby) {
-                    gallery[i].votes = gallery[i].votes + 1;
-                }
+				let gallery = this.state.gallery;
+				for (let i = 0; i < gallery.length; i++) {
+					if (gallery[i].postby === postby) {
+						gallery[i].votes = gallery[i].votes + 1;
+					}
+				}
+				let switched = true;
+				while (switched === true) {
+					let count = 0;
+					for (let i = 0; i < gallery.length - 1; i++) {
+						if (gallery[i].votes < gallery[i + 1].votes) {
+							count++;
+							let galleryTemp = gallery[i + 1];
+							gallery[i + 1] = gallery[i];
+							gallery[i] = galleryTemp;
 						}
-						let switched = true;
-						while (switched === true) {
-							let count = 0;
-                for (let i = 0; i < gallery.length - 1; i++) {
-                    if (gallery[i].votes < gallery[i+1].votes) {
-											count++;
-                        let galleryTemp = gallery[i+1];
-                        gallery[i+1] = gallery[i];
-                        gallery[i] = galleryTemp;
-                    }
-								}
-								if (count === 0) {
-									switched = false;
-								}
-							}
-            
-            this.setState({gallery: gallery});
-            })
+					}
+					if (count === 0) {
+						switched = false;
+					}
+				}
+
+				this.setState({ gallery: gallery });
+			})
 	};
 
 
@@ -105,44 +106,64 @@ class App extends Component{
 			},
 			body: JSON.stringify({ id: id, username: username })
 		}).then(result => {
-            let gallery = this.state.gallery;
-            let outGallery = [];
-            for (let i = 0; i < gallery.length; i++) {
-                if (gallery[i].postby !== username) {
-                    outGallery.push(gallery[i]);
-                }
-            }
-            this.setState({gallery: outGallery});
+			let gallery = this.state.gallery;
+			let outGallery = [];
+			for (let i = 0; i < gallery.length; i++) {
+				if (gallery[i].postby !== username) {
+					outGallery.push(gallery[i]);
+				}
+			}
+			this.setState({ gallery: outGallery, submissioncount: 1 });
 		}).catch(err => {
 			console.log('ERROR!', err);
 		});
-    }
-    
+	}
 
-    render(){
+	submitEntry(e) {
+		const imageInput = document.getElementById('imageinput').value;
+		const commentInput = document.getElementById('commentinput').value;
+		fetch('/submission', {
+			method: 'POST',
+			credentials: 'same-origin',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				snacklink: imageInput,
+				comments : commentInput,
+				username : this.state.username,
+			}),
+		})
+		.then(res => res.json())
+		.then(json => this.setState({submissioncount: this.state.submissioncount-1, gallery : [...this.state.gallery, { postby: this.state.username, snacklink: imageInput, votes: 0, description: commentInput, id: parseInt(json) }]}))
+		.catch(err => err);
+	}
 
-			let showSubmit = [];
-			let gallery = [];
-      if(this.state.submissioncount !== undefined && this.state.submissioncount > 0 ) {
-        showSubmit.push(<SubmissionForm username={this.state.username} />);
-      } else {
-        showSubmit.push(<div></div>);
-      }
-			
-			if(this.state.gallery !== undefined) {
-				gallery.push(<PhotoGallery gallery={this.state.gallery} usernameLoggedIn={this.state.username} commentPost={this.commentPost} voteUp={this.voteUp} deletePost={this.deletePost}/>);
-			} else {
-				gallery.push(<div></div>);
-			}
-        return (
-            <div>
-                <Header id='header' username={this.state.username}  avatar={this.state.avatar} />
-								{showSubmit}
-								{gallery}
-                <Footer />
-            </div>
-        );
-    }
+
+	render() {
+
+		const showSubmit = [];
+		const gallery = [];
+		if (this.state.submissioncount !== undefined && this.state.submissioncount > 0) {
+			showSubmit.push(<SubmissionForm submitEntry={this.submitEntry} />);
+		} else {
+			showSubmit.push(<div></div>);
+		}
+
+		if (this.state.gallery !== undefined) {
+			gallery.push(<PhotoGallery gallery={this.state.gallery} usernameLoggedIn={this.state.username} commentPost={this.commentPost} voteUp={this.voteUp} deletePost={this.deletePost} />);
+		} else {
+			gallery.push(<div></div>);
+		}
+		return (
+			<div>
+				<Header id='header' username={this.state.username} avatar={this.state.avatar} />
+				{showSubmit}
+				{gallery}
+				<Footer />
+			</div>
+		);
+	}
 
 }
 

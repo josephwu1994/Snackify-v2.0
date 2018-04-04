@@ -9,10 +9,11 @@ snackController.submitSnack = (req, res) => {
 			res.send('You Eat Too Much');
 		} else {
 			db.query(`UPDATE u SET submissioncount = submissioncount -1 WHERE username = '${req.body.username}';
-						INSERT INTO post (snacklink, description, postby, votes) VALUES ('${req.body.snacklink}', '${req.body.comments}', '${req.body.username}', 0);`,
+						INSERT INTO post (snacklink, description, postby, votes) VALUES ('${req.body.snacklink}', '${req.body.comments}', '${req.body.username}', 0);
+						SELECT id FROM post where postby = '${req.body.username}';`,
 				(err, result) => {
 					if (err) throw err;
-					res.send('successfully posted');
+					res.json(`${result[2].rows[0].id}`);
 				});
 		}
 	});
