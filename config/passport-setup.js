@@ -36,5 +36,6 @@ passport.use(
 		callbackURL: '/auth/github/redirect',
 		clientID: keys.github.clientID,
 		clientSecret: keys.github.clientSecret,
-	}, (accessToken, refreshToken, profile, done) => { userController.createUser(profile, done) }
-	));
+	}, (accessToken, refreshToken, profile, done) => { userController.createUser(profile, done) 
+	})
+);
