@@ -74,15 +74,22 @@ class App extends Component{
                 if (gallery[i].postby === postby) {
                     gallery[i].votes = gallery[i].votes + 1;
                 }
-            }
-
+						}
+						let switched = true;
+						while (switched === true) {
+							let count = 0;
                 for (let i = 0; i < gallery.length - 1; i++) {
                     if (gallery[i].votes < gallery[i+1].votes) {
+											count++;
                         let galleryTemp = gallery[i+1];
                         gallery[i+1] = gallery[i];
                         gallery[i] = galleryTemp;
                     }
-                }
+								}
+								if (count === 0) {
+									switched = false;
+								}
+							}
             
             this.setState({gallery: gallery});
             })
