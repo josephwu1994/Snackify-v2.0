@@ -3,6 +3,7 @@ const db = require('./../DB/db');
 const snackController = {};
 
 snackController.submitSnack = (req, res) => {
+
 	db.query(`SELECT submissioncount from u where username = '${req.body.username}';`, (err, count) => {
 		console.log(JSON.stringify(count) + "<==== this is count");
 		if (count.rows[0].submissioncount === 0) {
@@ -64,6 +65,7 @@ snackController.grabSnack = (req, res, next) => {
 				next();
 			}
 		});
+	
 }
 
 snackController.incrementVotes = (req, res, next) => {
@@ -84,6 +86,22 @@ snackController.addComment = (req, res) => {
 		if (err) throw err;
 		res.json('Successfully posted Comments');
 	});
+}
+
+snackController.deleteComments = (req, res, next) => {
+	const deleteCommentsQuery = `Delete from comments where id > 0;`;
+	db.query(deleteCommentsQuery, (err, comments) => {
+		if (err) throw err;
+		next();
+	})
+}
+
+snackController.deletePosts = (req, res, next) => {
+	const deletePostsQuery = `Delete from post where id > 0;`
+	db.query(deletePostsQuery, (err, posts) => {
+		if (err) throw err;
+		next();
+	})
 }
 
 

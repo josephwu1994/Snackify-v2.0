@@ -34,4 +34,13 @@ userController.handleVote = (req, res) => {
 	})
 }
 
+userController.resetAllSubCounts = (req, res, next) => {
+	console.log('in reset user submission counts');
+	const resetSubCountsQuery = `Update u set submissioncount = 1 where id > 0;`
+	db.query(resetSubCountsQuery, (err, posts) => {
+		if (err) throw err;
+		next();
+	})
+}
+
 module.exports = userController;

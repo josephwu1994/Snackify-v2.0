@@ -46,6 +46,10 @@ app.get('/test', snackController.grabSnack, (req, res) => {
 	res.json(req.user);
 });
 
+app.get('/deleteWeek', snackController.deleteComments, snackController.deletePosts, userController.resetAllSubCounts, (req, res) => {
+	res.json([]);
+});
+
 app.post('/voteup', snackController.incrementVotes,
 										userController.handleVote
 );

@@ -3,6 +3,8 @@ import Header from './header.jsx';
 import SubmissionForm from './submission-form.jsx';
 import PhotoGallery from './photoGallery.jsx';
 import Footer from './footer.jsx';
+import Countdown from 'react-countdown-now';
+
 
 
 class App extends Component {
@@ -13,6 +15,7 @@ class App extends Component {
 		this.voteUp = this.voteUp.bind(this);
 		this.commentPost = this.commentPost.bind(this);
 		this.submitEntry = this.submitEntry.bind(this);
+    this.deleteWeek = this.deleteWeek.bind(this);
 	}
 
 	componentDidMount() {
@@ -117,8 +120,16 @@ class App extends Component {
 		}).catch(err => {
 			console.log('ERROR!', err);
 		});
-	}
+ }
 
+  deleteWeek() {
+    fetch('/deleteWeek', {credentials: "same-origin"})
+    .then(response => {
+      this.setState({gallery: response});
+    })
+    .catch(err => console.log(err));
+   }
+        
 	submitEntry(e) {
 		const imageInput = document.getElementById('imageinput').value;
 		const commentInput = document.getElementById('commentinput').value;
@@ -158,13 +169,15 @@ class App extends Component {
 		return (
 			<div>
 				<Header id='header' username={this.state.username} avatar={this.state.avatar} />
+         <div className="timer">
+          <Countdown date={'April 4, 2018 14:26:30'} onComplete={this.deleteWeek}/>
+         </div>
 				{showSubmit}
 				{gallery}
 				<Footer />
 			</div>
 		);
 	}
-
 }
 
 export default App;
