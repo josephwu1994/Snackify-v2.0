@@ -10,10 +10,16 @@ class Entry extends Component {
 			content : '',
 		}
 		this.textHandle = this.textHandle.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
 	}
+
 
 	textHandle(e) {
 		this.setState({content: e.target.value});
+	}
+	handleSubmit() {
+		this.props.commentPost(this.state.content, this.props.userPost.id, this.props.usernameLoggedIn);
+		this.setState({content: ''});
 	}
   
 	render() {
@@ -36,9 +42,8 @@ class Entry extends Component {
 					<div className="votes">{this.props.userPost.votes}</div>
 					<button className="thumbsBtn" onClick={() => {this.props.voteUp(this.props.usernameLoggedIn, this.props.userPost.postby)} }><ThumbsUp className="thumbs" /></button>
 					<button className="deleteBtn" onClick={() => { this.props.deletePost(this.props.userPost.id, this.props.usernameLoggedIn) }} > Delete </button>
-					<input className="commentInput" onChange={this.textHandle} />
-					<button className="commentBtn" onClick={()=> {this.props.commentPost(this.state.content, this.props.userPost.id, this.props.usernameLoggedIn)}}> reply </button>
-
+					<input className="commentInput" onChange={this.textHandle} value={this.state.content}/>
+					<button className="commentBtn" onClick={this.handleSubmit}> reply </button>
 				</div>
 			);
 		} else {
@@ -49,14 +54,12 @@ class Entry extends Component {
 					{commentDisplay}
 					<div className="votes">{this.props.userPost.votes}</div>
 					<button className="thumbsBtn" onClick={() => {this.props.voteUp(this.props.usernameLoggedIn, this.props.userPost.postby)}}><ThumbsUp className="thumbs" /></button>
-					<input className="commentInput" onChange={this.textHandle} />
-					<button className="commentBtn" onClick={()=> {this.props.commentPost(this.state.content, this.props.userPost.id, this.props.usernameLoggedIn)}}> reply </button>
+					<input className="commentInput" onChange={this.textHandle} value={this.state.content}/>
+					<button className="commentBtn" onClick={this.handleSubmit}> reply </button>
 				</div>
 			)
 		}
 	}
-
-
 }
 
 export default Entry;

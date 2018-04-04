@@ -113,11 +113,25 @@ class App extends Component{
     
 
     render(){
+
+			let showSubmit = [];
+			let gallery = [];
+      if(this.state.submissioncount !== undefined && this.state.submissioncount > 0 ) {
+        showSubmit.push(<SubmissionForm username={this.state.username} />);
+      } else {
+        showSubmit.push(<div></div>);
+      }
+			
+			if(this.state.gallery !== undefined) {
+				gallery.push(<PhotoGallery gallery={this.state.gallery} usernameLoggedIn={this.state.username} commentPost={this.commentPost} voteUp={this.voteUp} deletePost={this.deletePost}/>);
+			} else {
+				gallery.push(<div></div>);
+			}
         return (
             <div>
                 <Header id='header' username={this.state.username}  avatar={this.state.avatar} />
-                <SubmissionForm username={this.state.username} />
-                <PhotoGallery gallery={this.state.gallery} usernameLoggedIn={this.state.username} commentPost={this.commentPost} voteUp={this.voteUp} deletePost={this.deletePost}/>
+								{showSubmit}
+								{gallery}
                 <Footer />
             </div>
         );
