@@ -3,8 +3,8 @@ import Header from './header.jsx';
 import SubmissionForm from './submission-form.jsx';
 import PhotoGallery from './photoGallery.jsx';
 import Footer from './footer.jsx';
-
-
+import Countdown from 'react-countdown-now';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 class App extends Component{
     constructor(props) {
         super(props)
@@ -12,6 +12,7 @@ class App extends Component{
         this.deletePost = this.deletePost.bind(this);
 		    this.voteUp = this.voteUp.bind(this);
         this.commentPost = this.commentPost.bind(this);
+        this.deleteWeek = this.deleteWeek.bind(this);
     }
 
     componentDidMount() {
@@ -110,16 +111,27 @@ class App extends Component{
 			console.log('ERROR!', err);
 		});
     }
+
+    deleteWeek() {
+        fetch('/deleteWeek', {credentials: "same-origin"})
+        .then(response => {
+					this.setState({gallery: response});
+        })
+				.catch(err => console.log(err));
+    }
     
 
     render(){
         return (
-            <div>
+            <MuiThemeProvider>
                 <Header id='header' username={this.state.username}  avatar={this.state.avatar} />
+                <div className="timer">
+                <Countdown date={'April 4, 2018 14:26:30'} onComplete={this.deleteWeek}/>
+                </div>
                 <SubmissionForm username={this.state.username} />
                 <PhotoGallery gallery={this.state.gallery} usernameLoggedIn={this.state.username} commentPost={this.commentPost} voteUp={this.voteUp} deletePost={this.deletePost}/>
                 <Footer />
-            </div>
+            </MuiThemeProvider>
         );
     }
 

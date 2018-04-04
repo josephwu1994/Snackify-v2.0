@@ -3,7 +3,7 @@ const db = require('./../DB/db');
 const snackController = {};
 
 snackController.submitSnack = (req, res) => {
-
+	console.log('username', req.body.username);
 	db.query(`SELECT submissioncount from u where username = '${req.body.username}';`, (err, count) => {
 		console.log(JSON.stringify(count)+"<==== this is count");
 		if (count.rows[0].submissioncount === 0) {
@@ -32,23 +32,17 @@ snackController.deleteSnack = (req, res) => {
 
 
 snackController.grabSnack = (req, res, next) => {
-	db.query(`SELECT postby FROM post order by votes desc;
-						SELECT snacklink FROM post order by votes desc;
-						SELECT votes FROM post order by votes desc;
-						SELECT description FROM post order by votes desc;
-						SELECT id FROM post order by votes desc;`, (err, result) => {
+	db.query(`SELECT postby, snacklink, votes, description, id FROM post order by votes desc;`, (err, result) => {
 			const resultArr = [];
-
-			const rows = result.map((col) => {
-				return col.rows;
-			})
-			for (let i = 0; i < rows[0].length; i++) {
+							if (result.rows.length > 0) {
+			let rows = result.rows;
+			for (let i = 0; i < rows.length; i++) {
 				const userObj = {};
-				userObj.postby = rows[0][i].postby;
-				userObj.snacklink = rows[1][i].snacklink;
-				userObj.votes = rows[2][i].votes;
-				userObj.description = rows[3][i].description;
-				userObj.id = rows[4][i].id;
+				userObj.postby = rows[i].postby;
+				userObj.snacklink = rows[i].snacklink;
+				userObj.votes = rows[i].votes;
+				userObj.description = rows[i].description;
+				userObj.id = rows[i].id;
 				resultArr.push(userObj);
 			}
 			resultArr.forEach((post, i) => {
@@ -62,7 +56,9 @@ snackController.grabSnack = (req, res, next) => {
 					}
 				});
 			})
+		}
 		});
+	
 }
 
 snackController.incrementVotes = (req, res, next) => {
@@ -83,6 +79,24 @@ snackController.addComment = (req, res) => {
 		if(err) throw err;
 		res.json('Successfully posted Comments');
 	});
+}
+
+snackController.deleteComments = (req, res, next) => {
+	console.log('in delete comments');
+	const deleteCommentsQuery = `Delete from comments where id > 0;`;
+	db.query(deleteCommentsQuery, (err, comments) => {
+		if (err) throw err;
+		next();
+	})
+}
+
+snackController.deletePosts = (req, res, next) => {
+	console.log('in delete posts');
+	const deletePostsQuery = `Delete from post where id > 0;`
+	db.query(deletePostsQuery, (err, posts) => {
+		if (err) throw err;
+		next();
+	})
 }
 
 module.exports = snackController;
