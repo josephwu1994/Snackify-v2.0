@@ -20,7 +20,7 @@ snackController.submitSnack = (req, res) => {
 
 snackController.deleteSnack = (req, res, next) => {
 	const deleteComments = `Delete from comments where postid = ${req.body.id};`;
-	const deleteQuery = `Delete from "post" where id = ${req.body.id} and postby = '${req.body.username}';`;
+	const deleteQuery = `Delete from post where id = ${req.body.id} and postby = '${req.body.username}';`;
 	db.query(deleteComments + deleteQuery, (err, result) => {
 		if (err) {
 			res.status(400).json({ error: "cannot delete post" });

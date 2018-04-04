@@ -35,7 +35,7 @@ class SubmissionForm extends Component {
 				{/* add action and method!!!! */}
 				Image: <input id="imageinput" type='text' name='image' /> <br />
 				Comment: <input id="commentinput" type='text' name='comment' /> <br />
-				<button type='submit' onClick={(e)=>{this.submitEntry(e)}} > Add Snack </button>
+				<button type='submit' onClick={this.submitEntry} > Add Snack </button>
 			</div>
 		);
 	}
