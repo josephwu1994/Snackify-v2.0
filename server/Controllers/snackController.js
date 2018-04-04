@@ -33,9 +33,8 @@ snackController.deleteSnack = (req, res, next) => {
 
 
 snackController.grabSnack = (req, res, next) => {
-	db.query(`SELECT postby, snacklink, votes, description, id FROM post;`,
+	db.query(`SELECT postby, snacklink, votes, description, id FROM post order by votes desc;`,
 		(err, result) => {
-			console.log(result);
 			const resultArr = [];
 			if (result.rows.length > 0) {
 				const rows = result.rows;
