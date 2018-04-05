@@ -36,26 +36,36 @@ class Entry extends Component {
 		
 			return (
 				<div className='entry'>
+				<div className='likeBucket'>
 					<div>{this.props.userPost.postby}</div>
 					<img className='entryImg' src={this.props.userPost.snacklink} />
-					{commentDisplay}
 					<div className="votes">{this.props.userPost.votes}</div>
 					<button className="thumbsBtn" onClick={() => {this.props.voteUp(this.props.usernameLoggedIn, this.props.userPost.postby)} }><ThumbsUp className="thumbs" /></button>
 					<button className="deleteBtn" onClick={() => { this.props.deletePost(this.props.userPost.id, this.props.usernameLoggedIn) }} > Delete </button>
+					
+				</div>
+				<div className='commentDisplay'>
+					{commentDisplay}
 					<input className="commentInput" onChange={this.textHandle} value={this.state.content}/>
 					<button className="commentBtn" onClick={this.handleSubmit}> reply </button>
+				</div>
 				</div>
 			);
 		} else {
 			return (
 				<div className='entry'>
+				<div className='likeBucket'>
 					<div>{this.props.userPost.postby}</div>
 					<img className='entryImg' src={this.props.userPost.snacklink} />
-					{commentDisplay}
 					<div className="votes">{this.props.userPost.votes}</div>
 					<button className="thumbsBtn" onClick={() => {this.props.voteUp(this.props.usernameLoggedIn, this.props.userPost.postby)}}><ThumbsUp className="thumbs" /></button>
+					
+					</div>
+					<div className='commentDisplay'>
+					{commentDisplay}
 					<input className="commentInput" onChange={this.textHandle} value={this.state.content}/>
 					<button className="commentBtn" onClick={this.handleSubmit}> reply </button>
+				</div>
 				</div>
 			)
 		}

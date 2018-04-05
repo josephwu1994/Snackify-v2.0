@@ -78,13 +78,14 @@ header ul li{
 .entryImg{
     width: 200px;
     height: 200px;
-
 }
 
 .entry{
-
+    display: flex;
+    width: 100%;
     border: 1px solid lightgray; 
     margin: 50px; 
+    padding: 10px;
 }
 .thumbsBtn {
 	background-color: transparent;
@@ -100,4 +101,16 @@ header ul li{
     background-color: black; 
     color: white;
  
+}
+
+.timer{
+    text-align: center;
+    background-color: black;
+    color: white;
+    font-size: 40px;
+}
+
+.commentDisplay{
+    display: flex;
+    flex-direction: column;
 }

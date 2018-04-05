@@ -4,7 +4,7 @@ import SubmissionForm from './submission-form.jsx';
 import PhotoGallery from './photoGallery.jsx';
 import Footer from './footer.jsx';
 import Countdown from 'react-countdown-now';
-
+const moment = require('moment');
 
 
 class App extends Component {
@@ -15,7 +15,7 @@ class App extends Component {
 		this.voteUp = this.voteUp.bind(this);
 		this.commentPost = this.commentPost.bind(this);
 		this.submitEntry = this.submitEntry.bind(this);
-    this.deleteWeek = this.deleteWeek.bind(this);
+        this.deleteWeek = this.deleteWeek.bind(this);
 	}
 
 	componentDidMount() {
@@ -123,9 +123,24 @@ class App extends Component {
  }
 
   deleteWeek() {
-    fetch('/deleteWeek', {credentials: "same-origin"})
-    .then(response => {
-      this.setState({gallery: response});
+      console.log('in the delete week');
+    let date = moment().add(7, 'days').calendar();
+    fetch('/deleteWeek', {
+        method: 'POST',
+		headers: {
+			credentials: "same-origin",
+			'Content-Type': 'application/json',
+		},
+        body: JSON.stringify({ date })
+    }).then(response => {
+        fetch('/test', { credentials: "same-origin" })
+        .then(response => response.json())
+        .then(myJson => {
+            console.log('myJson', myJson);
+            this.setState(myJson);
+        })
+        .catch(err => console.log(err));
+    
     })
     .catch(err => console.log(err));
    }
@@ -152,7 +167,6 @@ class App extends Component {
 
 
 	render() {
-
 		const showSubmit = [];
 		const gallery = [];
 		if (this.state.submissioncount !== undefined && this.state.submissioncount > 0) {
@@ -170,7 +184,7 @@ class App extends Component {
 			<div>
 				<Header id='header' username={this.state.username} avatar={this.state.avatar} />
          <div className="timer">
-          <Countdown date={'April 4, 2018 14:26:30'} onComplete={this.deleteWeek}/>
+          <Countdown date={this.state.date} onComplete={this.deleteWeek}/>
          </div>
 				{showSubmit}
 				{gallery}

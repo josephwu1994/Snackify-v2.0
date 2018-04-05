@@ -40,14 +40,17 @@ app.post('/submission', snackController.submitSnack);
 app.post('/delete', snackController.deleteSnack, userController.handleDelete);
 //=================================================================
 
-app.get('/test', snackController.grabSnack, (req, res) => {
+app.get('/test', snackController.grabSnack, snackController.getCountdown, (req, res) => {
 	req.user = JSON.parse(req.user);
 	req.user.gallery = res.locals.result;
+	req.user.date = res.locals.date;
+	console.log("this is the date from the db", res.locals.date);
 	res.json(req.user);
 });
 
-app.get('/deleteWeek', snackController.deleteComments, snackController.deletePosts, userController.resetAllSubCounts, (req, res) => {
-	res.json([]);
+app.post('/deleteWeek', snackController.countdownReset, snackController.deleteComments, snackController.deletePosts, userController.resetAllSubCounts, (req, res) => {
+	console.log('whats getting sent back?', res.locals.date);
+	res.json(res.locals.date);
 });
 
 app.post('/voteup', snackController.incrementVotes,

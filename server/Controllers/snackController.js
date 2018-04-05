@@ -104,5 +104,25 @@ snackController.deletePosts = (req, res, next) => {
 	})
 }
 
+snackController.getCountdown = (req, res, next) => {
+	const getCountdownQuery = `Select date from countdown;`
+	db.query(getCountdownQuery, (err, date) => {
+		if (err) throw err;
+		console.log(date.rows[0].date);
+		res.locals.date = date.rows[0].date;
+		next();
+	})
+}
+
+snackController.countdownReset = (req, res, next) => {
+	console.log('new date', req.body.date);
+	const countdownResetQuery = `Update countdown set date = '${req.body.date}';`
+	db.query(countdownResetQuery, (err, date) => {
+		if (err) throw err;
+		res.locals.date = req.body.date;
+		next();
+	})
+}
+
 
 module.exports = snackController;
