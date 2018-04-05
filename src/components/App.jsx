@@ -15,7 +15,7 @@ class App extends Component {
 		this.voteUp = this.voteUp.bind(this);
 		this.commentPost = this.commentPost.bind(this);
 		this.submitEntry = this.submitEntry.bind(this);
-    this.deleteWeek = this.deleteWeek.bind(this);
+		this.deleteWeek = this.deleteWeek.bind(this);
 	}
 
 	componentDidMount() {
@@ -120,10 +120,10 @@ class App extends Component {
 		}).catch(err => {
 			console.log('ERROR!', err);
 		});
- }
+	}
 
-  deleteWeek() {
-    fetch('/deleteWeek', {
+	deleteWeek() {
+		fetch('/deleteWeek', {
 			method: 'POST',
 			headers: {
 				credentials: "same-origin",
@@ -132,15 +132,15 @@ class App extends Component {
 			body: JSON.stringify({
 				num1: this.state.gallery[0].description,
 				num2: this.state.gallery[1].description,
-				num3: this.state.gallery[2].description, 
+				num3: this.state.gallery[2].description,
 			})
 		})
-    .then(response => {
-      this.setState({gallery: [], submissioncount: 1});
-    })
-    .catch(err => console.log(err));
-   }
-        
+			.then(response => {
+				this.setState({ gallery: [], submissioncount: 1 });
+			})
+			.catch(err => console.log(err));
+	}
+
 	submitEntry(e) {
 		const imageInput = document.getElementById('imageInput').value;
 		const commentInput = document.getElementById('commentInput').value;
@@ -152,13 +152,13 @@ class App extends Component {
 			},
 			body: JSON.stringify({
 				snacklink: imageInput,
-				comments : commentInput,
-				username : this.state.username,
+				comments: commentInput,
+				username: this.state.username,
 			}),
 		})
-		.then(res => res.json())
-		.then(json => this.setState({submissioncount: this.state.submissioncount-1, gallery : [...this.state.gallery, { postby: this.state.username, snacklink: imageInput, votes: 0, description: commentInput, id: parseInt(json) }]}))
-		.catch(err => err);
+			.then(res => res.json())
+			.then(json => this.setState({ submissioncount: this.state.submissioncount - 1, gallery: [...this.state.gallery, { postby: this.state.username, snacklink: imageInput, votes: 0, description: commentInput, id: parseInt(json) }] }))
+			.catch(err => err);
 	}
 
 
@@ -180,9 +180,9 @@ class App extends Component {
 		return (
 			<div>
 				<Header id='header' username={this.state.username} avatar={this.state.avatar} />
-         <div className="timer">
-          <Countdown date={'April 5, 2018 21:10:20'} onComplete={this.deleteWeek}/>
-         </div>
+				<div className="timer">
+					<Countdown date={'April 5, 2018 21:10:20'} onComplete={this.deleteWeek} />
+				</div>
 				{showSubmit}
 				{gallery}
 				<Footer />
