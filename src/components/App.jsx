@@ -15,7 +15,7 @@ class App extends Component {
 		this.voteUp = this.voteUp.bind(this);
 		this.commentPost = this.commentPost.bind(this);
 		this.submitEntry = this.submitEntry.bind(this);
-        this.deleteWeek = this.deleteWeek.bind(this);
+		this.deleteWeek = this.deleteWeek.bind(this);
 	}
 
 	componentDidMount() {
@@ -123,7 +123,7 @@ class App extends Component {
  }
 
   deleteWeek() {
-      console.log('in the delete week');
+     console.log('in the delete week');
     let date = moment().add(7, 'days').calendar();
     fetch('/deleteWeek', {
         method: 'POST',
@@ -131,7 +131,12 @@ class App extends Component {
 			credentials: "same-origin",
 			'Content-Type': 'application/json',
 		},
-        body: JSON.stringify({ date })
+        body: JSON.stringify({ 
+          num1: this.state.gallery[0].description,
+				num2: this.state.gallery[1].description,
+				num3: this.state.gallery[2].description,
+          date,
+        })
     }).then(response => {
         fetch('/test', { credentials: "same-origin" })
         .then(response => response.json())
@@ -145,9 +150,12 @@ class App extends Component {
     .catch(err => console.log(err));
    }
         
+	}
+
+
 	submitEntry(e) {
-		const imageInput = document.getElementById('imageinput').value;
-		const commentInput = document.getElementById('commentinput').value;
+		const imageInput = document.getElementById('imageInput').value;
+		const commentInput = document.getElementById('commentInput').value;
 		fetch('/submission', {
 			method: 'POST',
 			credentials: 'same-origin',
@@ -156,13 +164,13 @@ class App extends Component {
 			},
 			body: JSON.stringify({
 				snacklink: imageInput,
-				comments : commentInput,
-				username : this.state.username,
+				comments: commentInput,
+				username: this.state.username,
 			}),
 		})
-		.then(res => res.json())
-		.then(json => this.setState({submissioncount: this.state.submissioncount-1, gallery : [...this.state.gallery, { postby: this.state.username, snacklink: imageInput, votes: 0, description: commentInput, id: parseInt(json) }]}))
-		.catch(err => err);
+			.then(res => res.json())
+			.then(json => this.setState({ submissioncount: this.state.submissioncount - 1, gallery: [...this.state.gallery, { postby: this.state.username, snacklink: imageInput, votes: 0, description: commentInput, id: parseInt(json) }] }))
+			.catch(err => err);
 	}
 
 
@@ -186,6 +194,7 @@ class App extends Component {
          <div className="timer">
           <Countdown date={this.state.date} onComplete={this.deleteWeek}/>
          </div>
+
 				{showSubmit}
 				{gallery}
 				<Footer />

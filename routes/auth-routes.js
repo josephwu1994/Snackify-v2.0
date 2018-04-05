@@ -11,6 +11,22 @@ router.get('/login.css', (req, res) => {
 	res.sendFile(path.join(__dirname, './../public/login.css'));
 });
 
+router.get('/font-awesome.css', (req, res) => {
+	res.sendFile(path.join(__dirname, './../public/font-awesome.css'));
+});
+
+router.get('/bootstrap-social.css', (req, res) => {
+	res.sendFile(path.join(__dirname, './../public/bootstrap-social.css'))
+});
+
+router.get('/bootstrap.css', (req, res) => {
+	res.sendFile(path.join(__dirname, './../public/bootstrap.css'));
+})
+
+router.get('/fonts/fontawesome-webfont', (req, res) => {
+	res.sendFile(path.join(__dirname, './../fonts'));
+})
+
 router.get('/github', passport.authenticate('github', {
 	scope: ['profile']
 }));

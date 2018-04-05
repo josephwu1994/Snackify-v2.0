@@ -11,5 +11,9 @@ module.exports = {
 	},
 	session: {
 		cookieKey: 'snackifythekitchen'
+	},
+	gmail: {
+		user: 'snackifyemailer@gmail.com',
+		pass: 'codesmith',
 	}
 }
