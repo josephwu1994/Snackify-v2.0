@@ -4,7 +4,7 @@ import SubmissionForm from './submission-form.jsx';
 import PhotoGallery from './photoGallery.jsx';
 import Footer from './footer.jsx';
 import Countdown from 'react-countdown-now';
-
+const moment = require('moment');
 
 
 class App extends Component {
@@ -120,26 +120,38 @@ class App extends Component {
 		}).catch(err => {
 			console.log('ERROR!', err);
 		});
-	}
+ }
 
-	deleteWeek() {
-		fetch('/deleteWeek', {
-			method: 'POST',
-			headers: {
-				credentials: "same-origin",
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				num1: this.state.gallery[0].description,
+  deleteWeek() {
+     console.log('in the delete week');
+    let date = moment().add(7, 'days').calendar();
+    fetch('/deleteWeek', {
+        method: 'POST',
+		headers: {
+			credentials: "same-origin",
+			'Content-Type': 'application/json',
+		},
+        body: JSON.stringify({ 
+          num1: this.state.gallery[0].description,
 				num2: this.state.gallery[1].description,
 				num3: this.state.gallery[2].description,
-			})
-		})
-			.then(response => {
-				this.setState({ gallery: [], submissioncount: 1 });
-			})
-			.catch(err => console.log(err));
+          date,
+        })
+    }).then(response => {
+        fetch('/test', { credentials: "same-origin" })
+        .then(response => response.json())
+        .then(myJson => {
+            console.log('myJson', myJson);
+            this.setState(myJson);
+        })
+        .catch(err => console.log(err));
+    
+    })
+    .catch(err => console.log(err));
+   }
+        
 	}
+
 
 	submitEntry(e) {
 		const imageInput = document.getElementById('imageInput').value;
@@ -163,7 +175,6 @@ class App extends Component {
 
 
 	render() {
-
 		const showSubmit = [];
 		const gallery = [];
 		if (this.state.submissioncount !== undefined && this.state.submissioncount > 0) {
@@ -180,9 +191,10 @@ class App extends Component {
 		return (
 			<div>
 				<Header id='header' username={this.state.username} avatar={this.state.avatar} />
-				<div className="timer">
-					<Countdown date={'April 5, 2018 21:10:20'} onComplete={this.deleteWeek} />
-				</div>
+         <div className="timer">
+          <Countdown date={this.state.date} onComplete={this.deleteWeek}/>
+         </div>
+
 				{showSubmit}
 				{gallery}
 				<Footer />

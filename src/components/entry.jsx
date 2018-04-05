@@ -60,6 +60,7 @@ class Entry extends Component {
 					</div>
 					{deleteDisplay}
 				</div>
+				</div>
 			);
 	}
 }
