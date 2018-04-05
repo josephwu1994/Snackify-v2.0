@@ -123,16 +123,27 @@ class App extends Component {
  }
 
   deleteWeek() {
-    fetch('/deleteWeek', {credentials: "same-origin"})
+    fetch('/deleteWeek', {
+			method: 'POST',
+			headers: {
+				credentials: "same-origin",
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				num1: this.state.gallery[0].description,
+				num2: this.state.gallery[1].description,
+				num3: this.state.gallery[2].description, 
+			})
+		})
     .then(response => {
-      this.setState({gallery: response});
+      this.setState({gallery: [], submissioncount: 1});
     })
     .catch(err => console.log(err));
    }
         
 	submitEntry(e) {
-		const imageInput = document.getElementById('imageinput').value;
-		const commentInput = document.getElementById('commentinput').value;
+		const imageInput = document.getElementById('imageInput').value;
+		const commentInput = document.getElementById('commentInput').value;
 		fetch('/submission', {
 			method: 'POST',
 			credentials: 'same-origin',
@@ -170,7 +181,7 @@ class App extends Component {
 			<div>
 				<Header id='header' username={this.state.username} avatar={this.state.avatar} />
          <div className="timer">
-          <Countdown date={'April 4, 2018 14:26:30'} onComplete={this.deleteWeek}/>
+          <Countdown date={'April 5, 2018 21:10:20'} onComplete={this.deleteWeek}/>
          </div>
 				{showSubmit}
 				{gallery}

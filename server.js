@@ -10,6 +10,7 @@ const bodyParser = require('body-parser');
 const db = require('./server/DB/db');
 const snackController = require('./server/Controllers/snackController');
 const userController = require('./server/Controllers/userController');
+const nodemailer = require('nodemailer');
 
 const app = express();
 
@@ -24,6 +25,15 @@ app.use(cookieSession({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cookieParser());
+
+const transporter = nodemailer.createTransport({
+	service: 'gmail',
+	auth: {
+		user: keys.gmail.user,
+		pass: keys.gmail.pass,
+	}
+})
+
 
 
 app.use('/auth', authRoutes);
@@ -46,16 +56,28 @@ app.get('/test', snackController.grabSnack, (req, res) => {
 	res.json(req.user);
 });
 
-app.get('/deleteWeek', snackController.deleteComments, snackController.deletePosts, userController.resetAllSubCounts, (req, res) => {
-	res.json([]);
+app.post('/deleteWeek', snackController.deleteComments, snackController.deletePosts, userController.resetAllSubCounts, (req, res) => {
+	transporter.sendMail({
+		from: 'snackifyemailer@gmail.com',
+		to: 'mmb296@cornell.edu',
+		subject: 'It WORKS!',
+		text: `Winner goes to ---------->  ${req.body.num1}
+					 RunnerUp ---------> ${req.body.num2} and ${req.body.num3}`
+	}, (err, info) => {
+		if (err) res.json(err);
+		else res.json('Successfully sent' + info);
+	});
 });
 
 app.post('/voteup', snackController.incrementVotes,
-										userController.handleVote
+	userController.handleVote
 );
 
 app.post('/comment', snackController.addComment);
 
+app.get('/email', (req, res) => {
+	
+});
 
 app.listen(3000, () => {
 	console.log('listening on port 3000...');
