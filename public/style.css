@@ -62,20 +62,57 @@ header ul li {
 }
 
 .logout {
-  margin-top: 40px;
-  font-family: Arial, Helvetica, sans-serif;
+	margin-top: 0px;
+	font-size: 16px;
+	font-weight: 800;
+	font-family: Arial, Helvetica, sans-serif;
+	padding:10px;
+	box-shadow: 1px 1px 20px rgba(0,0,0,0.2);
+	cursor:pointer;
 }
 
-#currentUserImage {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+.logout:hover,
+.logout a:hover{
+	background-color: white;
+	color: #89e5e8;
+}
+
+.timer{
+	 margin: auto;
+	 margin-top: 10px;
+	 display:flex;
+	 justify-self: center;
+	 box-shadow: 1px 1px 20px rgba(0,0,0,0.2);
+	 border-radius: 10px;
+	 height:50px;
+	 width:189px;
+	 background-color: black;
+	 padding:10px;
+}
+
+.timer span {
+	font-size: 40px;
+	color:white;
 }
 
 #currentUserDiv {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#currentUserImage {
+  width: 50px;
+  height: 50px;
+	border-radius: 50%;
+	box-shadow: 1px 1px 10px rgba(0,0,0,0.2);
+}
+
+#currentUserName{
+	font-weight: 800;
+	font-size: 16px;
+	margin-top: 5px;
+	text-shadow: 1px 1px 10px rgba(0,0,0,0.2);
 }
 
 #logo {
@@ -123,7 +160,9 @@ header ul li {
   margin-top: 6px;
   margin-bottom: 20px;
   text-align: center;
-  font-family: 'Roboto', sans-serif;
+	font-family: 'Roboto', sans-serif;
+	outline: none;
+	cursor: pointer;
 }
 
 .imageInput[type=text]:focus {
@@ -134,7 +173,7 @@ header ul li {
   /* border: 1px solid darkgray; */
 	padding: 10px;
   margin: 10px;
-  margin-top: 40px;
+  margin-top: 20px;
 	display: flex;
 	flex-direction: column;
   flex-flow: row wrap;
@@ -142,6 +181,7 @@ header ul li {
 	justify-content: center;
 	/* box-shadow: inset 3px 3px 23px -2px rgba(0,0,0,0.40); */
 	/* border-radius: 10px; */
+	overflow-y: scroll;
 }
 
 /* ---------------------------ENTRY--------------------------- */
@@ -154,39 +194,92 @@ header ul li {
   border: 1px solid lightgray;
   width: 100%;
 	display: flex;
+	flex-direction: row;
 	box-shadow: 1px 1px 10px 0px rgba(0,0,0,.50);
 	border-radius: 10px;
+}
+
+.postInfo{
+	flex-grow: 1;
+	height:160px;
+	box-shadow:1px 1px 5px 0 rgba(0,0,0,.5);
+	border-radius: 10px 0 0 10px;
+}
+
+.votes{
+	font-size:30px;
+	font-weight:800;
+	margin-left: 5px;
+	margin-top: 2px;
+	text-shadow: 1px 1px 5px rgba(0,0,0,.3);
+}
+
+.thumbsBtn {
+	background-color: transparent;
+	border: 1px solid transparent;
+	width: 30px;
+	height: 30px;
+	outline:none;
+	margin-top: -1px;
+	margin-left:5px;
+	cursor:pointer;
+}
+
+.thumbs {
+	width: 30px;
+	height: 30px;
+	color: steelblue;
+	border-color: transparent;
+	margin-top:-13px;
+	text-shadow: 1px 1px 5px rgba(0,0,0,.3);
 }
 
 .userEntry {
   text-align: left;
 	font-size: 25px;
-	text-shadow: 1px 1px 10px rgba(0,0,0,0.2);
+	margin: 5px 0px;
+	font-weight: 500;
+	text-shadow: 1px 1px 2px rgba(0,0,0,1);
   /* make a border box and add margin */
 }
 
 .entryImg {
-  width: 150px;
-  height: 150px;
+  width: 100px;
+	height: 120px;
+	margin-top: -25px;
+	margin-left: auto;
+	margin-right: auto;
+	border: 1px solid white;
+	box-shadow: 1px 1px 10px rgba(0,0,0,1);
+	text-align: center;
+	justify-self: center;
 }
 
-
-.thumbsBtn {
-  background-color: transparent;
-  width: 20px;
-  height: 20px;
+.entryImg img {
+	width:90px;
+	height:110px;
+	margin:5px 0px;
 }
 
-.thumbs {
-  width: 20px;
-  height: 20px;
-  color: steelblue;
-  border-color: transparent;
+.description {
+	margin-top: 5px;
 }
+
 
 .commentHolder {
+	background-color: #89e5e8;
   display: flex;
-  flex-direction: column;
+	flex-direction: column;
+	flex-grow: 4;
+	padding:10px;
+	justify-content: flex-end;
+}
+
+.commentArea{
+	background-color: white;
+	overflow-y: scroll;
+	height: 87px;
+	margin-bottom: 10px;
 }
 
 .comments {
@@ -198,19 +291,38 @@ header ul li {
 }
 
 .commentBtn {
-  width: 50px;
-  padding: 0 3px;
+	outline: none;
+	cursor: pointer;
+	width: 90px;
+	margin: 5px 5px -5px 5px;
+	background:    #9b49d2;
+	background:    -webkit-linear-gradient(#9b49d2, #c855c8);
+	background:    linear-gradient(#9b49d2, #c855c8);
+	border-radius: 1000px;
+	box-shadow:    1px 1px #444444;
+	padding:       1px 10px;
+	color:         #ffffff;
+	display:       inline-block;
+	font-size:     14px;
+	font-weight: 	 800;
+	font-family: 	"Caviar", sans-serif;
+	text-align:    center;
+	text-shadow:   1px 1px #000000;
 }
 
 .commentInput {
-  float: right;
+	float: right;
+	padding-left: 10px;
+	margin-right: 30px;
   border-radius: 7px;
-  width: 300px;
+	width: 98%;
 }
 
 .deleteBtn {
   height: 20px;
-  width: 50px;
+	width: 50px;
+	border-radius: 7px;
+	
 }
 
 #footer {

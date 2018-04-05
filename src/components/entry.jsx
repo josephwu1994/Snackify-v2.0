@@ -45,11 +45,15 @@ class Entry extends Component {
 							<div className="votes">{this.props.userPost.votes}
 							<button className="thumbsBtn" onClick={() => {this.props.voteUp(this.props.usernameLoggedIn, this.props.userPost.postby)} }><ThumbsUp className="thumbs" /></button>
 							</div>
-							<img className='entryImg' src={this.props.userPost.snacklink} />
-							<div className="description">{this.props.userPost.description}</div>
+							<div className='entryImg'>
+								<img src={this.props.userPost.snacklink} />
+								<div className="description">{this.props.userPost.description}</div>
+							</div>
 						</div>
 						<div className="commentHolder">
+							<div className="commentArea">
 							{commentDisplay}
+							</div>
 							<input className="commentInput" onChange={this.textHandle} value={this.state.content}/>
 							<button className="commentBtn" onClick={this.handleSubmit}> reply </button>
 						</div>
